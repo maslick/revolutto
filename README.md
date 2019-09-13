@@ -9,11 +9,18 @@ money transfer REST API (see [specs](ASSIGNMENT.md))
 
 
 ## Features
-* gradle, Kotlin, coroutines :heart:
+* Gradle, Kotlin, coroutines :heart:
+* Lightweight executable jar: ~13MB
 * Web framework: [Ktor](https://ktor.io/)
 * Reactive runtime: Netty
 * Dependency injection: [Koin](https://insert-koin.io/)
 * Production ready: Dockerfile + k8s yaml
+
+## TODO
+* account management API (adding new accounts), at the moment accounts are hard-coded for simplicity's sake
+* substitute the in-memory data store with a production-ready one (e.g. Hazelcast, Postgres, etc.)
+* performance tests (right now a simple [lock-based synchronization](https://github.com/maslick/revolutto/blob/2a56fa0ed175d2cd3994554fdae62b10b3008f05/src/main/kotlin/io/maslick/revolutto/BusinessLogic.kt#L14) is used, other techniques e.g. ``thread confinement`` can be introduced).
+* improve the CI/CD pipeline (send artifacts to bintray/nexus, push to docker registry, deploy to k8s cluster)
 
 ## Installation
 ```
@@ -94,8 +101,8 @@ $ open plot.html
 ```
 
 ## Docker
-* see [Dockerfile](Dockerfile)
-* using [minimalka](https://github.com/maslick/minimalka) docker image
+* Uses [Minimalka](https://github.com/maslick/minimalka) lightweight JDK 11 Docker image
+* See [Dockerfile](Dockerfile)
 ```zsh
 $ ./gradlew clean build -x test
 $ docker build -t revolutto .
