@@ -8,6 +8,7 @@ import org.junit.Test
 import org.koin.core.context.startKoin
 import org.koin.test.AutoCloseKoinTest
 import org.koin.test.inject
+import java.math.BigDecimal
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -29,7 +30,7 @@ class ServiceTest : AutoCloseKoinTest() {
 
         assertTrue(result)
         assertEquals(daisysInitialBalance + scroogesInitialBalance, balance.getBalance("daisy"))
-        assertEquals(0.0, balance.getBalance("scrooge"))
+        assertEquals(BigDecimal.ZERO, balance.getBalance("scrooge"))
     }
 
     @Test
@@ -40,17 +41,17 @@ class ServiceTest : AutoCloseKoinTest() {
 
         val jobs = 1.rangeTo(scroogesInitialBalance.toInt()).map {
             launch {
-                assertTrue(transaction.transfer("scrooge", "daisy", 1.0))
+                assertTrue(transaction.transfer("scrooge", "daisy", BigDecimal.ONE))
             }
         }
         jobs.forEach { job -> job.join() }
 
         assertEquals(daisysInitialBalance + scroogesInitialBalance, balance.getBalance("daisy"))
-        assertEquals(0.0, balance.getBalance("scrooge"))
+        assertEquals(BigDecimal.ZERO, balance.getBalance("scrooge"))
     }
 
     @Test
     fun `transfer money to themselves`() = runBlocking {
-        assertFalse(transaction.transfer("scrooge", "scrooge", 1.0))
+        assertFalse(transaction.transfer("scrooge", "scrooge", BigDecimal.ONE))
     }
 }

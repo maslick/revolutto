@@ -18,9 +18,11 @@ money transfer REST API (see [specs](ASSIGNMENT.md))
 
 ## TODO
 * account management API (adding new accounts), at the moment accounts are hard-coded for simplicity's sake
+* improve Account's balance type (support different currencies, etc.), at the moment ``BigInteger`` is used
 * substitute the in-memory data store with a production-ready one (e.g. Hazelcast, Postgres, etc.)
-* performance tests (right now a simple [lock-based synchronization](https://github.com/maslick/revolutto/blob/2a56fa0ed175d2cd3994554fdae62b10b3008f05/src/main/kotlin/io/maslick/revolutto/BusinessLogic.kt#L14) is used, other techniques e.g. ``thread confinement`` can be introduced).
+* performance tests (right now a simple [lock-based synchronization](https://github.com/maslick/revolutto/blob/2a56fa0ed175d2cd3994554fdae62b10b3008f05/src/main/kotlin/io/maslick/revolutto/BusinessLogic.kt#L14) is used, other techniques e.g. ``thread confinement`` can be investigated)
 * improve the CI/CD pipeline (send artifacts to bintray/nexus, push to docker registry, deploy to k8s cluster)
+* add Ingress controller (e.g. Nginx) + YAML definition
 
 ## Installation
 ```

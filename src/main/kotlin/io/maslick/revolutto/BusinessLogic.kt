@@ -1,18 +1,19 @@
 package io.maslick.revolutto
 
 import org.slf4j.LoggerFactory
+import java.math.BigDecimal
 
 interface ITransaction {
-    suspend fun transfer(from: String, to: String, amount: Double): Boolean
+    suspend fun transfer(from: String, to: String, amount: BigDecimal): Boolean
 }
 
 interface IBalance {
-    suspend fun getBalance(userId: String): Double
+    suspend fun getBalance(userId: String): BigDecimal
 }
 
 class Transaction(private val repo: IRepo) : ITransaction {
     @Synchronized
-    override suspend fun transfer(from: String, to: String, amount: Double): Boolean {
+    override suspend fun transfer(from: String, to: String, amount: BigDecimal): Boolean {
         if (from == to) return false
         if (!repo.withdraw(from, amount)) return false
         return repo.deposit(to, amount).also {

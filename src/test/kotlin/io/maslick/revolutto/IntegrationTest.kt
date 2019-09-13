@@ -11,6 +11,7 @@ import io.ktor.server.testing.withTestApplication
 import io.ktor.util.KtorExperimentalAPI
 import org.junit.Test
 import java.util.concurrent.Executors
+import java.util.concurrent.Executors.callable
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -59,9 +60,9 @@ class IntegrationTest {
         val initialBalanceDonald = getBalance("donald")
         val amount = 1.0
 
-        val pool = Executors.newFixedThreadPool(10)
-        val tasks = 1.rangeTo(10000).map {
-            Executors.callable { transferMoney(from = "scrooge", to = "donald", amount = amount) }
+        val pool = Executors.newFixedThreadPool(4)
+        val tasks = 1.rangeTo(10_000).map {
+            callable { transferMoney(from = "scrooge", to = "donald", amount = amount) }
         }
         pool.invokeAll(tasks)
 

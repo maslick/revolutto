@@ -7,9 +7,10 @@ import io.ktor.routing.Route
 import io.ktor.routing.get
 import io.ktor.routing.post
 import org.koin.ktor.ext.inject
+import java.math.BigDecimal
 
 
-data class BalanceReq(val from: String, val to: String, val amount: Double)
+data class BalanceReq(val from: String, val to: String, val amount: BigDecimal)
 
 fun Route.businessLogicRoutes() {
     val transactionService by inject<ITransaction>()
