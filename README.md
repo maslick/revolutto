@@ -89,6 +89,14 @@ $ cat results.bin | vegeta plot > plot.html
 $ open plot.html
 ```
 
+## Docker
+```zsh
+$ docker build -t revolutto .
+$ docker run -d -p 8081:8080 revolutto:latest
+$ http `docker-machine ip default`:8081/v1/daisy/balance | jq
+```
+
+
 ## Links
 * [httpie](https://httpie.org/)
 * [vegeta](https://github.com/tsenart/vegeta)
