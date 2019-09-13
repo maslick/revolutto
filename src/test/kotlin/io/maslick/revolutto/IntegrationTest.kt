@@ -10,6 +10,7 @@ import io.ktor.server.testing.setBody
 import io.ktor.server.testing.withTestApplication
 import io.ktor.util.KtorExperimentalAPI
 import org.junit.Test
+import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.Executors.callable
 import kotlin.test.assertEquals
@@ -22,10 +23,10 @@ class IntegrationTest {
 
     @Test
     fun `checking users balance`() = withTestApplication(Application::test) {
-        val initialBalanceUser1 = getBalance("daisy")
-        val initialBalanceUser2 = getBalance("scrooge")
-        assertTrue(initialBalanceUser1 > 0)
-        assertTrue(initialBalanceUser2 > 0)
+        val initialBalanceDaisy = getBalance("daisy")
+        val initialBalanceScrooge = getBalance("scrooge")
+        assertTrue(initialBalanceDaisy > 0)
+        assertTrue(initialBalanceScrooge > 0)
     }
 
     @Test
@@ -68,6 +69,30 @@ class IntegrationTest {
 
         assertEquals(initialBalanceScrooge + initialBalanceDonald, getBalance("donald"))
         assertEquals(0.0, getBalance("scrooge"))
+    }
+
+    @Test
+    fun `transfer money concurrently to each other in small amounts`() = withTestApplication(Application::test) {
+        val initialBalanceScrooge = getBalance("scrooge")
+        val initialBalanceGyro = getBalance("gyro")
+
+        val numberOfTransactions = 10_000
+        val divider = 2
+        val amount1 = initialBalanceScrooge / numberOfTransactions
+        val amount2 = initialBalanceGyro / numberOfTransactions / divider
+
+        val pool = Executors.newFixedThreadPool(4)
+        val tasks = arrayListOf<Callable<Any>>()
+
+        for (i in 1..numberOfTransactions) {
+            tasks.add(callable { transferMoney(from = "scrooge", to = "gyro", amount = amount1) })
+            tasks.add(callable { transferMoney(from = "gyro", to = "scrooge", amount = amount2) })
+        }
+        pool.invokeAll(tasks)
+
+        assertEquals(initialBalanceGyro - amount2*numberOfTransactions + amount1*numberOfTransactions, getBalance("gyro"))
+        assertEquals(initialBalanceScrooge + amount2*numberOfTransactions - amount1*numberOfTransactions, getBalance("scrooge"))
+        assertEquals(initialBalanceGyro + initialBalanceScrooge, getBalance("gyro") + getBalance("scrooge"))
     }
 
     @Test
