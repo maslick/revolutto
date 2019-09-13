@@ -69,6 +69,11 @@ class IntegrationTest {
         assertEquals(0.0, getBalance("scrooge"))
     }
 
+    @Test
+    fun `test health endpoint`() = withTestApplication(Application::test) {
+        assertEquals(HttpStatusCode.OK, handleRequest(HttpMethod.Get, "v1/health").response.status())
+    }
+
     private fun TestApplicationEngine.getBalance(userId: String): Double {
         return handleRequest(HttpMethod.Get, "v1/$userId/balance").response.let {
             assertEquals(HttpStatusCode.OK, it.status())
