@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: revolutto-api
+  labels:
+    maintainer: maslick
+    project: revolutto
+    app: revolutto-api
+spec:
+  ports:
+    - port: 80
+      targetPort: http
+  selector:
+    maintainer: maslick
+    project: revolutto
+    app: revolutto-api
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: revolutto-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: revolutto-api
+      labels:
+        maintainer: maslick
+        project: revolutto
+        app: revolutto-api
+    spec:
+      containers:
+        - image: maslick/revolutto
+          imagePullPolicy: Always
+          name: revolutto-api
+          env:
+            - name: PORT
+              value: "8082"
+          ports:
+            - containerPort: 8082
+              name: http
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /v1/health
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /v1/health
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 15

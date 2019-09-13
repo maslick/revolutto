@@ -3,6 +3,7 @@ money transfer REST API (see [specs](ASSIGNMENT.md))
 
 [![Build Status](https://travis-ci.org/maslick/revolutto.svg?branch=master)](https://travis-ci.org/maslick/revolutto)
 [![codecov](https://codecov.io/gh/maslick/revolutto/branch/master/graph/badge.svg)](https://codecov.io/gh/maslick/revolutto)
+[![Docker image](https://img.shields.io/microbadger/image-size/maslick/revolutto/latest.svg)](https://cloud.docker.com/u/maslick/repository/docker/maslick/revolutto)
 
 
 ## Features
@@ -10,6 +11,7 @@ money transfer REST API (see [specs](ASSIGNMENT.md))
 * Web framework: [Ktor](https://ktor.io/)
 * Reactive runtime: Netty
 * Dependency injection: [Koin](https://insert-koin.io/)
+* Production ready: Dockerfile + k8s yaml
 
 ## Installation
 ```
@@ -91,11 +93,20 @@ $ open plot.html
 
 ## Docker
 ```zsh
+$ ./gradlew clean build -x test
 $ docker build -t revolutto .
 $ docker run -d -p 8081:8080 revolutto:latest
 $ http `docker-machine ip default`:8081/v1/daisy/balance | jq
+$ http `docker-machine ip default`:8081/v1/health
 ```
 
+## k8s
+```zsh
+$ k apply -f k8s/deployment.yaml
+$ k get all -l project=revolutto
+$ k port-forward revolutto-api-5b58b69647-877qd 8083:8082
+$ http :8083/v1/health
+```
 
 ## Links
 * [httpie](https://httpie.org/)

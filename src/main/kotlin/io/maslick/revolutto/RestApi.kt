@@ -34,5 +34,9 @@ fun Route.businessLogicRoutes() {
             "username" to userId
         ))
     }
+
+    get("v1/health") {
+        call.respond("UP")
+    }
 }
 
