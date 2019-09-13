@@ -1,4 +1,5 @@
 <configuration>
+    <variable name="LOG_LEVEL" value="${LOG_LEVEL:-INFO}"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
@@ -10,5 +11,5 @@
     </root>
 
     <logger name="io.netty" level="INFO"/>
-    <logger name="revolutto" level="INFO"/>
+    <logger name="revolutto" level="${LOG_LEVEL}"/>
 </configuration>

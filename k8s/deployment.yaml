@@ -36,6 +36,8 @@ spec:
           env:
             - name: PORT
               value: "8082"
+            - name: LOG_LEVEL
+              value: "DEBUG"
           ports:
             - containerPort: 8082
               name: http
