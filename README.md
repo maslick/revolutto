@@ -1,6 +1,10 @@
 # =revolutto=
 money transfer REST API (see [specs](ASSIGNMENT.md))
 
+[![Build Status](https://travis-ci.org/maslick/revolutto.svg?branch=master)](https://travis-ci.org/maslick/revolutto)
+[![codecov](https://codecov.io/gh/maslick/revolutto/branch/master/graph/badge.svg)](https://codecov.io/gh/maslick/revolutto)
+
+
 ## Features
 * gradle, Kotlin, coroutines :heart:
 * Web framework: [Ktor](https://ktor.io/)
