@@ -2,7 +2,7 @@
 money transfer REST API (see [specs](ASSIGNMENT.md))
 
 [![Build Status](https://travis-ci.org/maslick/revolutto.svg?branch=master)](https://travis-ci.org/maslick/revolutto)
-[![image size](https://img.shields.io/badge/image%20size-68MB-blue.svg)](https://cloud.docker.com/u/maslick/repository/docker/maslick/revolutto)
+[![image size](https://img.shields.io/badge/image%20size-68MB-blue.svg)](https://hub.docker.com/r/maslick/revolutto)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f36549893cc694d0f271/maintainability)](https://codeclimate.com/github/maslick/revolutto/maintainability)
 [![codecov](https://codecov.io/gh/maslick/revolutto/branch/master/graph/badge.svg)](https://codecov.io/gh/maslick/revolutto)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
